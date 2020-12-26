@@ -10,6 +10,6 @@ public class BlockEntityRegistry {
     public static BlockEntityType<NewIndustrialBlockEntity> NEW_INDUSTRIAL_BLOCK_ENTITY;
 
     public static void register(){
-        NEW_INDUSTRIAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("mod:tests"), BlockEntityType.Builder.create(NewIndustrialBlockEntity::new, BlockRegistry.TEST_FACTORY_BLOCK).build(null));
+        NEW_INDUSTRIAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("prg:test"), BlockEntityType.Builder.create(NewIndustrialBlockEntity::new, BlockRegistry.TEST_FACTORY_BLOCK).build(null));
     }
 }

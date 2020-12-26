@@ -14,12 +14,12 @@ public class RecipeRegistry {
     public static RecipeType<NewIndustrialRecipe> NEW_RECIPE;
 
     public static void init() {
-        NEW_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("urmom:crushing"), new RecipeType<NewIndustrialRecipe>() {
+        NEW_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("prg:test"), new RecipeType<NewIndustrialRecipe>() {
             public String toString() {
-                return "urmom:crushing";
+                return "prg:test";
             }
         });
-        NEW_SERIALIZER = RecipeSerializer.register("urmom:crushing", new Compat(NewIndustrialRecipe::new, 200) {
+        NEW_SERIALIZER = RecipeSerializer.register("prg:test", new Compat(NewIndustrialRecipe::new, 200) {
         });
     }
 }

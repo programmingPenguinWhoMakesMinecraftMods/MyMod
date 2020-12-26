@@ -16,7 +16,6 @@ import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.programmingpenguin.prgpengsuite.registry.BlockEntityRegistry;
 import net.programmingpenguin.prgpengsuite.registry.BlockRegistry;
 import net.programmingpenguin.prgpengsuite.registry.RecipeRegistry;
-import net.programmingpenguin.prgpengsuite.registry.ScreenHandlerRegistry;
 
 public class Main implements ModInitializer {
 
@@ -36,7 +35,6 @@ public class Main implements ModInitializer {
 	public void onInitialize() {
 		BlockRegistry.registerBlocks();
 		BlockEntityRegistry.register();
-		ScreenHandlerRegistry.register();
 		RecipeRegistry.init();
 		//ORES
 		RegistryKey<ConfiguredFeature<?, ?>> oreWoolOverworld = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,

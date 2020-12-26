@@ -14,8 +14,8 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 
 public class Compat<T extends AbstractCookingRecipe> implements RecipeSerializer<T> {
-    public final int cookingTime;
-    public final Compat.RecipeFactory<T> recipeFactory;
+    private final int cookingTime;
+    private final Compat.RecipeFactory<T> recipeFactory;
 
     public Compat(Compat.RecipeFactory<T> recipeFactory, int cookingTime) {
         this.cookingTime = cookingTime;
@@ -57,5 +57,4 @@ public class Compat<T extends AbstractCookingRecipe> implements RecipeSerializer
         T create(Identifier id, String group, Ingredient input, ItemStack output, float experience, int cookTime);
     }
 }
-
 
