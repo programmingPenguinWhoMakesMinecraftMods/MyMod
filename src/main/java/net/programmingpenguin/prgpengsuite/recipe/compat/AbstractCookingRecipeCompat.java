@@ -1,4 +1,4 @@
-package net.programmingpenguin.prgpengsuite.compat;
+package net.programmingpenguin.prgpengsuite.recipe.compat;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,16 +11,16 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public abstract class Compat2 implements Recipe<Inventory> {
-    public RecipeType<?> type = null;
-    public Identifier id = null;
-    public static String group = null;
-    public static Ingredient input = null;
-    public static ItemStack output = null;
-    public static float experience = 0;
+public abstract class AbstractCookingRecipeCompat implements Recipe<Inventory> {
+    public final RecipeType<?> type;
+    public final Identifier id;
+    public static String group;
+    public static Ingredient input;
+    public static ItemStack output;
+    public static float experience;
     public static int cookTime;
 
-    public Compat2(RecipeType<?> type, Identifier id, String group, Ingredient input, ItemStack output, float experience, int cookTime) {
+    public AbstractCookingRecipeCompat(RecipeType<?> type, Identifier id, String group, Ingredient input, ItemStack output, float experience, int cookTime) {
         this.type = type;
         this.id = id;
         this.group = group;
@@ -28,7 +28,7 @@ public abstract class Compat2 implements Recipe<Inventory> {
         this.output = output;
         this.experience = experience;
         this.cookTime = cookTime;
-}
+    }
 
     public boolean matches(Inventory inv, World world) {
         return this.input.test(inv.getStack(0));
@@ -74,4 +74,3 @@ public abstract class Compat2 implements Recipe<Inventory> {
         return this.type;
     }
 }
-

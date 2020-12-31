@@ -1,5 +1,5 @@
 {
-  "type": "prg:test",
+  "type": "penguin:test",
   "ingredient": {
     "item": "minecraft:beef"
   },

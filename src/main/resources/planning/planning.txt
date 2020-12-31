@@ -1,0 +1,30 @@
+Efficiency {
+     10%
+     25%
+     40%
+     55%
+     65%
+     75%
+     84%
+     93%
+     95%
+}
+
+Energy Generation  {
+     Solar Panel
+     Coal Generator
+     Nuclear Reactor
+     Fusion Reactor
+     Hydro Generator
+     Windmill
+     Gas Generator
+     Anti-Matter Energy Generator
+}
+
+Matter Generation {
+     Small Hadron Collider
+     Medium Hadron Collider
+     Large Hadron Collider
+     Maximum Hadron Collider
+     Fusion Reactor Material Generator
+}

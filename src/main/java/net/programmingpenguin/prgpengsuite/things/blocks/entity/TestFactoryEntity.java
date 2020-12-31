@@ -2,16 +2,13 @@ package net.programmingpenguin.prgpengsuite.things.blocks.entity;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.SharedConstants;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +24,6 @@ import net.minecraft.recipe.*;
 import net.minecraft.screen.FurnaceScreenHandler;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.SmokerScreenHandler;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
@@ -40,7 +36,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.programmingpenguin.prgpengsuite.recipe.NewIndustrialRecipe;
+import net.programmingpenguin.prgpengsuite.recipe.TestRecipe;
 import net.programmingpenguin.prgpengsuite.registry.BlockEntityRegistry;
 import net.programmingpenguin.prgpengsuite.registry.RecipeRegistry;
 
@@ -48,36 +44,33 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+public class TestFactoryEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {
+    private static final int[] TOP_SLOTS = new int[]{0};
+    private static final int[] BOTTOM_SLOTS = new int[]{2, 1};
+    private static final int[] SIDE_SLOTS = new int[]{1};
+    protected DefaultedList<ItemStack> inventory;
+    private int burnTime;
+    private int fuelTime;
+    private int cookTime;
+    private int cookTimeTotal;
+    protected final PropertyDelegate propertyDelegate;
+    private final Object2IntOpenHashMap<Identifier> recipesUsed;
+    protected final RecipeType<? extends TestRecipe> recipeType;
 
-
-
-public class NewIndustrialBlockEntity extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider, Tickable {
-    public static final int[] TOP_SLOTS = new int[]{0};
-    public static final int[] BOTTOM_SLOTS = new int[]{2, 1};
-    public static final int[] SIDE_SLOTS = new int[]{1};
-    public DefaultedList<ItemStack> inventory;
-    public int burnTime;
-    public int fuelTime;
-    public int cookTime;
-    public int cookTimeTotal;
-    public final PropertyDelegate propertyDelegate;
-    public final Object2IntOpenHashMap<Identifier> recipesUsed;
-    public final RecipeType<? extends NewIndustrialRecipe> recipeType;
-
-    public NewIndustrialBlockEntity() {
-        super(BlockEntityRegistry.NEW_INDUSTRIAL_BLOCK_ENTITY);
+    public TestFactoryEntity() {
+        super(BlockEntityRegistry.TEST_FACTORY_ENTITY);
         this.inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
         this.propertyDelegate = new PropertyDelegate() {
             public int get(int index) {
                 switch(index) {
                     case 0:
-                        return NewIndustrialBlockEntity.this.burnTime;
+                        return TestFactoryEntity.this.burnTime;
                     case 1:
-                        return NewIndustrialBlockEntity.this.fuelTime;
+                        return TestFactoryEntity.this.fuelTime;
                     case 2:
-                        return NewIndustrialBlockEntity.this.cookTime;
+                        return TestFactoryEntity.this.cookTime;
                     case 3:
-                        return NewIndustrialBlockEntity.this.cookTimeTotal;
+                        return TestFactoryEntity.this.cookTimeTotal;
                     default:
                         return 0;
                 }
@@ -86,16 +79,16 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
             public void set(int index, int value) {
                 switch(index) {
                     case 0:
-                        NewIndustrialBlockEntity.this.burnTime = value;
+                        TestFactoryEntity.this.burnTime = value;
                         break;
                     case 1:
-                        NewIndustrialBlockEntity.this.fuelTime = value;
+                        TestFactoryEntity.this.fuelTime = value;
                         break;
                     case 2:
-                        NewIndustrialBlockEntity.this.cookTime = value;
+                        TestFactoryEntity.this.cookTime = value;
                         break;
                     case 3:
-                        NewIndustrialBlockEntity.this.cookTimeTotal = value;
+                        TestFactoryEntity.this.cookTimeTotal = value;
                 }
 
             }
@@ -105,23 +98,21 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
             }
         };
         this.recipesUsed = new Object2IntOpenHashMap();
-        this.recipeType = RecipeRegistry.NEW_RECIPE;
+        this.recipeType = RecipeRegistry.TEST_RECIPE;
     }
 
-    @Override
-    public Text getContainerName() {
-        return new TranslatableText("factory.container.test");
+    protected Text getContainerName() {
+        return new TranslatableText("container.penguin.factorytest");
     }
 
-    @Override
-    public ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new FurnaceScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
     public static Map<Item, Integer> createFuelTimeMap() {
         Map<Item, Integer> map = Maps.newLinkedHashMap();
-        addFuel(map, (ItemConvertible)Items.LAVA_BUCKET, 20000);
-        addFuel(map, (ItemConvertible)Blocks.COAL_BLOCK, 16000);
+        addFuel(map, (ItemConvertible) Items.LAVA_BUCKET, 20000);
+        addFuel(map, (ItemConvertible) Blocks.COAL_BLOCK, 16000);
         addFuel(map, (ItemConvertible)Items.BLAZE_ROD, 2400);
         addFuel(map, (ItemConvertible)Items.COAL, 1600);
         addFuel(map, (ItemConvertible)Items.CHARCOAL, 1600);
@@ -210,7 +201,7 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
         }
     }
 
-    public boolean isBurning() {
+    private boolean isBurning() {
         return this.burnTime > 0;
     }
 
@@ -324,7 +315,7 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
         }
     }
 
-    private void craftRecipe(Recipe<?> recipe) {
+    private void craftRecipe( Recipe<?> recipe) {
         if (recipe != null && this.canAcceptRecipeOutput(recipe)) {
             ItemStack itemStack = (ItemStack)this.inventory.get(0);
             ItemStack itemStack2 = recipe.getOutput();
@@ -352,12 +343,13 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
             return 0;
         } else {
             Item item = fuel.getItem();
-            return (Integer)createFuelTimeMap().getOrDefault(item, 0);
+            return createFuelTimeMap().getOrDefault(item, 0);
         }
     }
 
-    protected int getCookTime() {
-        return (Integer)this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world).map(AbstractCookingRecipe::getCookTime).orElse(200);
+    public int getCookTime() {
+        int cookTime = this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world).map(TestRecipe::getCookTime).orElse(200);
+        return (int) (cookTime / 60);
     }
 
     public static boolean canUseAsFuel(ItemStack stack) {
@@ -484,7 +476,7 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
         ObjectIterator var4 = this.recipesUsed.object2IntEntrySet().iterator();
 
         while(var4.hasNext()) {
-            Entry<Identifier> entry = (Entry)var4.next();
+            Object2IntMap.Entry<Identifier> entry = (Object2IntMap.Entry)var4.next();
             world.getRecipeManager().get((Identifier)entry.getKey()).ifPresent((recipe) -> {
                 list.add(recipe);
                 dropExperience(world, vec3d, entry.getIntValue(), ((AbstractCookingRecipe)recipe).getExperience());
@@ -519,4 +511,3 @@ public class NewIndustrialBlockEntity extends LockableContainerBlockEntity imple
 
     }
 }
-

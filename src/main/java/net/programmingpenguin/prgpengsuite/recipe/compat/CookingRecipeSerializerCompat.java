@@ -1,23 +1,21 @@
-package net.programmingpenguin.prgpengsuite.compat;
+package net.programmingpenguin.prgpengsuite.recipe.compat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.AbstractCookingRecipe;
-import net.minecraft.recipe.CookingRecipeSerializer;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 
-public class Compat<T extends AbstractCookingRecipe> implements RecipeSerializer<T> {
-    private final int cookingTime;
-    private final Compat.RecipeFactory<T> recipeFactory;
+public class CookingRecipeSerializerCompat <T extends AbstractCookingRecipeCompat> implements RecipeSerializer<T> {
+    public final int cookingTime;
+    public final CookingRecipeSerializerCompat.RecipeFactory<T> recipeFactory;
 
-    public Compat(Compat.RecipeFactory<T> recipeFactory, int cookingTime) {
+    public CookingRecipeSerializerCompat(CookingRecipeSerializerCompat.RecipeFactory<T> recipeFactory, int cookingTime) {
         this.cookingTime = cookingTime;
         this.recipeFactory = recipeFactory;
     }
@@ -28,7 +26,7 @@ public class Compat<T extends AbstractCookingRecipe> implements RecipeSerializer
         Ingredient ingredient = Ingredient.fromJson((JsonElement)jsonElement);
         String string2 = JsonHelper.getString(jsonObject, "result");
         Identifier identifier2 = new Identifier(string2);
-        ItemStack itemStack = new ItemStack((ItemConvertible)Registry.ITEM.getOrEmpty(identifier2).orElseThrow(() -> {
+        ItemStack itemStack = new ItemStack((ItemConvertible) Registry.ITEM.getOrEmpty(identifier2).orElseThrow(() -> {
             return new IllegalStateException("Item: " + string2 + " does not exist");
         }));
         float f = JsonHelper.getFloat(jsonObject, "experience", 0.0F);
@@ -46,15 +44,14 @@ public class Compat<T extends AbstractCookingRecipe> implements RecipeSerializer
     }
 
     public void write(PacketByteBuf packetByteBuf, T abstractCookingRecipe) {
-        packetByteBuf.writeString(Compat2.group);
-        Compat2.input.write(packetByteBuf);
-        packetByteBuf.writeItemStack(Compat2.output);
-        packetByteBuf.writeFloat(Compat2.experience);
-        packetByteBuf.writeVarInt(Compat2.cookTime);
+        packetByteBuf.writeString(AbstractCookingRecipeCompat.group);
+        AbstractCookingRecipeCompat.input.write(packetByteBuf);
+        packetByteBuf.writeItemStack(AbstractCookingRecipeCompat.output);
+        packetByteBuf.writeFloat(AbstractCookingRecipeCompat.experience);
+        packetByteBuf.writeVarInt(AbstractCookingRecipeCompat.cookTime);
     }
 
-    public interface RecipeFactory<T extends AbstractCookingRecipe> {
+    public interface RecipeFactory<T extends AbstractCookingRecipeCompat> {
         T create(Identifier id, String group, Ingredient input, ItemStack output, float experience, int cookTime);
     }
 }
-
