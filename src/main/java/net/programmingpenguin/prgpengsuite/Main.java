@@ -13,10 +13,7 @@ import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.programmingpenguin.prgpengsuite.registry.BlockEntityRegistry;
-import net.programmingpenguin.prgpengsuite.registry.BlockRegistry;
-import net.programmingpenguin.prgpengsuite.registry.RecipeRegistry;
-import net.programmingpenguin.prgpengsuite.registry.ScreenHandlerRegistryB;
+import net.programmingpenguin.prgpengsuite.registry.*;
 
 public class Main implements ModInitializer {
 
@@ -38,6 +35,7 @@ public class Main implements ModInitializer {
 		BlockEntityRegistry.register();
 		ScreenHandlerRegistryB.init();
 		RecipeRegistry.init();
+		ItemRegistry.register();
 		//ORES
 		RegistryKey<ConfiguredFeature<?, ?>> oreWoolOverworld = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
 				new Identifier("ores", "copper_ore_overworld"));

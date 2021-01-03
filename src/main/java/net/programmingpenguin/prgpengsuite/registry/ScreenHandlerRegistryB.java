@@ -3,7 +3,7 @@ package net.programmingpenguin.prgpengsuite.registry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
-import net.programmingpenguin.prgpengsuite.things.blocks.screen.handler.TestStorageScreenHandler;
+import net.programmingpenguin.prgpengsuite.things.miscblocks.screen.handler.TestStorageScreenHandler;
 
 public class ScreenHandlerRegistryB {
 

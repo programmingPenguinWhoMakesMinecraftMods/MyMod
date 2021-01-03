@@ -10,10 +10,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.programmingpenguin.prgpengsuite.things.blocks.container.TestFactoryBlock;
-import net.programmingpenguin.prgpengsuite.things.blocks.container.TestStorageBlock;
-import net.programmingpenguin.prgpengsuite.things.blocks.furniture.Test;
-import net.programmingpenguin.prgpengsuite.things.blocks.ores.CopperOre;
+import net.programmingpenguin.prgpengsuite.things.energy_generation.block.*;
+import net.programmingpenguin.prgpengsuite.things.miscblocks.factory.TestFactoryBlock;
+import net.programmingpenguin.prgpengsuite.things.miscblocks.container.TestStorageBlock;
+import net.programmingpenguin.prgpengsuite.things.miscblocks.furniture.Test;
+import net.programmingpenguin.prgpengsuite.things.miscblocks.ores.CopperOre;
 
 public class BlockRegistry {
 
@@ -39,6 +40,17 @@ public class BlockRegistry {
     public static final Block TEST_STORAGE_BLOCK = new TestStorageBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
     public static final Block TEST_FACTORY_BLOCK = new TestFactoryBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
 
+    //EnergyGeneration
+    public static final Block ANTI_MATTER_REACTOR = new AntiMatterReactorBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block COAL_GENERATOR = new CoalGeneratorBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block FUSION_REACTOR = new FusionReactorBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block GAS_GENERATOR = new GasGeneratorBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block HYDRO_GENERATOR = new HydroGeneratorBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block NUCLEAR_REACTOR = new NuclearReactorBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block SOLAR_PANEL = new SolarPanelBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+    public static final Block WINDMILL = new WindmillBlock(FabricBlockSettings.copyOf(Blocks.BARREL));
+
+
     public static void registerBlocks() {
         Registry.register(Registry.BLOCK, new Identifier("penguin", "test"), TEST);
         Registry.register(Registry.BLOCK, new Identifier("penguin", "copper_ore"), COPPER_ORE);
@@ -59,8 +71,19 @@ public class BlockRegistry {
         Registry.register(Registry.BLOCK, new Identifier("penguin", "terbium_ore"), TERBIUM_ORE);
         Registry.register(Registry.BLOCK, new Identifier("penguin", "tantalum_ore"), TANTALUM_ORE);
         Registry.register(Registry.BLOCK, new Identifier("penguin", "molybdenum_ore"), MOLYBDENUM_ORE);
-        Registry.register(Registry.BLOCK, new Identifier("penguin", "lmao"), TEST_STORAGE_BLOCK);
-        Registry.register(Registry.BLOCK, new Identifier("penguin", "factory"), TEST_FACTORY_BLOCK);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "lmaob"), TEST_STORAGE_BLOCK);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "testfactorys"), TEST_FACTORY_BLOCK);
+
+        //EnergyGeneration
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "anti_matter_reactor"), ANTI_MATTER_REACTOR);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "coal_generator"), COAL_GENERATOR);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "fusion_reactor"), FUSION_REACTOR);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "gas_generator"), GAS_GENERATOR);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "hydro_generator"), HYDRO_GENERATOR);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "nuclear_reactor"), NUCLEAR_REACTOR);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "solar_panel"), SOLAR_PANEL);
+        Registry.register(Registry.BLOCK, new Identifier("penguin", "windmill"), WINDMILL);
+
 
 
         //Blocks
@@ -85,5 +108,13 @@ public class BlockRegistry {
         Registry.register(Registry.ITEM, new Identifier("penguin", "molybdenum_ore"), new BlockItem(MOLYBDENUM_ORE, new Item.Settings().group(ItemGroup.MISC)));
         Registry.register(Registry.ITEM, new Identifier("penguin", "lmao"), new BlockItem(TEST_STORAGE_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
         Registry.register(Registry.ITEM, new Identifier("penguin", "factory"), new BlockItem(TEST_FACTORY_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "anti_matter_reactor"), new BlockItem(ANTI_MATTER_REACTOR, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "coal_generator"), new BlockItem(COAL_GENERATOR, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "fusion_reactor"), new BlockItem(FUSION_REACTOR, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "gas_generator"), new BlockItem(GAS_GENERATOR, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "hydro_generator"), new BlockItem(HYDRO_GENERATOR, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "nuclear_reactor"), new BlockItem(NUCLEAR_REACTOR, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "solar_panel"), new BlockItem(SOLAR_PANEL, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, new Identifier("penguin", "windmill"), new BlockItem(WINDMILL, new Item.Settings().group(ItemGroup.MISC)));
     }
 }
